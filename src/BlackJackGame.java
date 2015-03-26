@@ -6,7 +6,7 @@ import java.util.Scanner;
 public class BlackJackGame {
 
 	double[] deck;
-
+//will this import
 	public BlackJackGame() {
 		deck = new double[52];
 		int count = 0;
