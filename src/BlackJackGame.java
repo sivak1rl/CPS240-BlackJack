@@ -40,7 +40,6 @@ public class BlackJackGame {
 		System.out.println(hand1);
 		Scanner sc = new Scanner(System.in);
 		String input;
-		//
 		System.out
 				.print("Do you want a hit? (y for yes, anything else for no): ");
 		input = sc.next();
