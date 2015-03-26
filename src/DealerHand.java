@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
 
-//will this import
+
 public class DealerHand {
 	List<Card> dHand;
 	public int score;
