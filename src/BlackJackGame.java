@@ -8,6 +8,7 @@ public class BlackJackGame {
 	double[] deck;
 //will this import
 	//this one will be it
+	// 7:48 attempt to commit
 	public BlackJackGame() {
 		deck = new double[52];
 		int count = 0;
