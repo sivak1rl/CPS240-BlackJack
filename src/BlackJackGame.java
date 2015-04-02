@@ -40,14 +40,106 @@ public class BlackJackGame {
 		for (double d : bjg.deck) {
 			cardDeck.add(new Card(d));
 		}
-		Collections.shuffle(cardDeck);
+		//Collections.shuffle(cardDeck);
 		hand1.Deal(cardDeck.remove(0), cardDeck.remove(0));
 		dHand.Deal(cardDeck.remove(0), cardDeck.remove(0));
 		System.out.println(hand1);
 		Scanner sc = new Scanner(System.in);
 		System.out.println("The dealer's up card is " + dHand.getUpCard());
 		String input;
-		//
+		if(hand1.checkDuplicates()){
+			//uses checkDuplicates in PlayerHand class,
+			//    which uses new methods compareTo and getValue, getSuit in Card class
+			System.out
+					.println("You have been dealt duplicates, do you want to split your hand?");
+			System.out
+					.println("(y for yes, anything else for no: ");
+			input=sc.next();
+			
+			if(input.equals("y")){
+				PlayerHand hand2 = new PlayerHand();
+				hand2.Hit(hand1.getDuplicateCard());
+				String input2;
+				while (input.equals("y") && hand1.score <= 21&& hand2.score<=21) {
+					System.out.println("hand 1:" +hand1);
+					System.out.println("hand 2:" +hand2);
+					System.out
+					.print("Do you want a hit hand 1? (y for yes, anything else for no): ");
+					
+					input = sc.next();
+					
+					System.out
+					.print("Do you want to hit hand 2? (y for yes, anything else for no):");
+					input2=sc.next();
+					
+					
+					if(input=="y"){
+						hand1.Hit(cardDeck.remove(0));
+					}
+					if(input2=="y"){
+						hand2.Hit(cardDeck.remove(0));
+					}
+					
+					//need to now ask whether or not to hit on each hand
+					System.out.println(hand1);
+					System.out.println(hand2);
+					if (hand1.score <= 21 &&hand2.score<=21) {
+						if(hand1.checkDuplicates()){
+							//uses checkDuplicates in PlayerHand class,
+							//    which uses new methods compareTo and getValue, getSuit in Card class
+							System.out
+									.println("You have been dealt duplicates, do you want to split your hand?");
+							System.out
+									.println("(y for yes, anything else for no: ");
+							input=sc.next();
+							
+							if(input.equals("y")){
+								PlayerHand hand3 = new PlayerHand();
+								hand2.Hit(hand1.getDuplicateCard());
+							}
+							
+							//same stuff as above but for 3 hands
+							
+							
+						System.out
+								.print("Do you want a hit? (y for yes, anything else for no): ");
+						input = sc.next();
+					}
+						if(hand2.checkDuplicates()){
+							//uses checkDuplicates in PlayerHand class,
+							//    which uses new methods compareTo and getValue, getSuit in Card class
+							System.out
+									.println("You have been dealt duplicates, do you want to split your hand?");
+							System.out
+									.println("(y for yes, anything else for no: ");
+							input=sc.next();
+							
+							if(input.equals("y")){
+								PlayerHand hand3 = new PlayerHand();
+								hand2.Hit(hand1.getDuplicateCard());
+							}
+							
+							//same stuff as above but for 3 hands
+						System.out
+								.print("Do you want a hit? (y for yes, anything else for no): ");
+						input = sc.next();
+						}
+					
+					
+						
+						
+					}
+				}
+			}
+			
+			
+			
+			
+			
+			
+			
+			
+		}
 		System.out
 				.print("Do you want a hit? (y for yes, anything else for no): ");
 		input = sc.next();
@@ -55,9 +147,27 @@ public class BlackJackGame {
 			hand1.Hit(cardDeck.remove(0));
 			System.out.println(hand1);
 			if (hand1.score <= 21) {
+				if(hand1.checkDuplicates()){
+					//uses checkDuplicates in PlayerHand class,
+					//    which uses new methods compareTo and getValue, getSuit in Card class
+					System.out
+							.println("You have been dealt duplicates, do you want to split your hand?");
+					System.out
+							.println("(y for yes, anything else for no: ");
+					input=sc.next();
+					
+					if(input.equals("y")){
+						PlayerHand hand2 = new PlayerHand();
+						hand2.Hit(hand1.getDuplicateCard());
+					}
 				System.out
 						.print("Do you want a hit? (y for yes, anything else for no): ");
 				input = sc.next();
+			}
+			
+			
+				
+				
 			}
 		}
 		System.out.println("The dealer's score is " + dHand.getScore());

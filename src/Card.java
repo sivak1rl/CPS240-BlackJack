@@ -68,4 +68,18 @@ public class Card {
 	public boolean hasAce() {
 		return ace;
 	}
+
+	public boolean compareTo(Card card) {
+		if(this.value==card.value){
+			return true;
+			}
+		else
+		return false;
+	}
+	public int getValue(){
+		return this.value;
+	}
+	public String getSuit(){
+		return this.suit;
+	}
 }

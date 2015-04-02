@@ -4,7 +4,7 @@ import java.util.List;
 public class PlayerHand {
 	List<Card> pHand;
 	public int score;
-
+	public int handSize=0;
 	public PlayerHand() {
 		pHand = new ArrayList<Card>();
 	}
@@ -14,7 +14,9 @@ public class PlayerHand {
 		pHand.add(c1);
 		score += c1.getScore();
 		pHand.add(c2);
+		
 		score += c2.getScore();
+		this.handSize+=2; //keeps track of hand size for check duplicates
 		if (score > 21 && c1.ace) {
 			score -= 10;
 			c1.ace = false;
@@ -22,13 +24,39 @@ public class PlayerHand {
 			score -= 10;
 			c2.ace = false;
 		}
+		
 	}
+	
+	public int getHandSize(){
+		//maybe need this 
+		return this.handSize;
+		
+	}
+	
+	public boolean checkDuplicates(){
+		
+		for(int x =0; x<this.handSize-1;x++){
+			for(int y=x+1;y<this.handSize;y++){
+				if(this.pHand.get(x).compareTo(this.pHand.get(y))){
+					return true;
+				}
+			}
+		}
+		return false;
+		
+	}
+	public Card getDuplicateCard(){
+		Card doopCard= this.pHand.get(this.handSize-1);
+		this.pHand.remove(handSize-1);
+		return doopCard;
+	}
+	
 
 	public void Hit(Card c) {
 		pHand.add(c);
 
 		score += c.getScore();
-
+		this.handSize+=1;
 		if (score > 21) {
 			for (Card d : pHand) {
 				if (d.ace) {
@@ -41,6 +69,7 @@ public class PlayerHand {
 			}
 		}
 	}
+	
 
 	@Override
 	public String toString() {
