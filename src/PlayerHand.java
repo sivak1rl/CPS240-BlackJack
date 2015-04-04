@@ -81,7 +81,7 @@ public class PlayerHand {
 		score += c.getScore();
 		this.handSize+=1;
 		if (score > 21) {
-			for (Card d : pHand) {
+			for (Card d : this.pHand) {
 				if (d.ace) {
 					score -= 10;
 					d.ace = false;
@@ -118,6 +118,16 @@ public class PlayerHand {
 		return hasDoubles;
 	}
 
-	
+	public boolean beatDealer(DealerHand dh) {
+		if (this.score > 21) {
+			return false;
+		}else if (dh.getScore() > 21) {
+			return true;
+		}else if(this.score > dh.getScore()) {
+			return true;
+		}
+		
+		return false;
+	}
 
 }
