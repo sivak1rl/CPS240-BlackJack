@@ -60,7 +60,7 @@ public class BlackJackGame {
 				PlayerHand hand2 = new PlayerHand();
 				hand2.Hit(hand1.getDuplicateCard());
 				String input2;
-				while (input.equals("y") && hand1.score <= 21&& hand2.score<=21) {
+				while (input.equals("y") && hand1.getScore() <= 21&& hand2.getScore()<=21) {
 					System.out.println("hand 1:" +hand1);
 					System.out.println("hand 2:" +hand2);
 					System.out
@@ -83,7 +83,7 @@ public class BlackJackGame {
 					//need to now ask whether or not to hit on each hand
 					System.out.println(hand1);
 					System.out.println(hand2);
-					if (hand1.score <= 21 &&hand2.score<=21) {
+					if (hand1.getScore() <= 21 &&hand2.getScore()<=21) {
 						if(hand1.checkDuplicates()){
 							//uses checkDuplicates in PlayerHand class,
 							//    which uses new methods compareTo and getValue, getSuit in Card class
@@ -124,29 +124,17 @@ public class BlackJackGame {
 								.print("Do you want a hit? (y for yes, anything else for no): ");
 						input = sc.next();
 						}
-					
-					
-						
-						
 					}
 				}
 			}
-			
-			
-			
-			
-			
-			
-			
-			
 		}
 		System.out
 				.print("Do you want a hit? (y for yes, anything else for no): ");
 		input = sc.next();
-		while (input.equals("y") && hand1.score <= 21) {
+		while (input.equals("y") && hand1.getScore() <= 21) {
 			hand1.Hit(cardDeck.remove(0));
 			System.out.println(hand1);
-			if (hand1.score <= 21) {
+			if (hand1.getScore() <= 21) {
 				if(hand1.checkDuplicates()){
 					//uses checkDuplicates in PlayerHand class,
 					//    which uses new methods compareTo and getValue, getSuit in Card class
@@ -176,13 +164,13 @@ public class BlackJackGame {
 			System.out
 					.println("The dealer hit and now has " + dHand.getScore());
 		}
-		if (hand1.score > dHand.getScore() && hand1.score <= 21
+		if (hand1.getScore() > dHand.getScore() && hand1.getScore() <= 21
 				|| dHand.getScore() > 21) {
 			System.out.println("You win");
-		} else if (hand1.score == dHand.getScore()) {
+		} else if (hand1.getScore() == dHand.getScore()) {
 			System.out.println("Push");
-		} else if (hand1.score < dHand.getScore() && dHand.getScore() <= 21
-				|| hand1.score > 21) {
+		} else if (hand1.getScore() < dHand.getScore() && dHand.getScore() <= 21
+				|| hand1.getScore() > 21) {
 			System.out.println("You lose");
 		}
 		sc.close();

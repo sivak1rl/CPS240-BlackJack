@@ -3,19 +3,39 @@ import java.util.List;
 
 public class PlayerHand {
 	List<Card> pHand;
-	public int score;
+	private int score;
+	
+	public int getScore() {
+		return score;
+	}
+
+	private boolean hasDoubles;
 	public int handSize=0;
+	
 	public PlayerHand() {
 		pHand = new ArrayList<Card>();
 	}
 
+	//I'm a lazy dealer
+	//Calls the method directly below it.
+	public void Deal(List<Card> deck) {
+		Deal(deck.remove(0), deck.remove(0));
+		
+	}
+	
 	public void Deal(Card c1, Card c2) {
 		pHand.clear();
 		pHand.add(c1);
 		score += c1.getScore();
 		pHand.add(c2);
-		
 		score += c2.getScore();
+		
+		if(c1.getValue() == c2.getValue()) {
+			hasDoubles = true;
+		} else {
+			hasDoubles = false;
+		}
+		
 		this.handSize+=2; //keeps track of hand size for check duplicates
 		if (score > 21 && c1.ace) {
 			score -= 10;
@@ -51,7 +71,10 @@ public class PlayerHand {
 		return doopCard;
 	}
 	
-
+	//Laze will consume me.
+	public void Hit(List<Card> deck) {
+		Hit(deck.remove(0));
+	}
 	public void Hit(Card c) {
 		pHand.add(c);
 
@@ -87,5 +110,14 @@ public class PlayerHand {
 			return str + "\nBust...";
 		}
 	}
+
+	/**
+	 * @return the hasDoubles
+	 */
+	public boolean getHasDoubles() {
+		return hasDoubles;
+	}
+
+	
 
 }

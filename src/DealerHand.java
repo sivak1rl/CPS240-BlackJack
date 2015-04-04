@@ -9,6 +9,11 @@ public class DealerHand {
 		dHand = new ArrayList<Card>();
 	}
 
+	//Again I'm a lazy dealer
+	public void Deal(List<Card> deck) {
+		Deal(deck.remove(0), deck.remove(0));
+		
+	}
 	public void Deal(Card c1, Card c2) {
 
 		dHand.clear();
@@ -26,6 +31,11 @@ public class DealerHand {
 
 	}
 
+	//Laze will consume me.
+	public void Hit(List<Card> deck) {
+		Hit(deck.remove(0));
+	}
+	
 	public void Hit(Card c) {
 		dHand.add(c);
 
@@ -53,7 +63,7 @@ public class DealerHand {
 	}
 	
 	public String toString() {
-		String str = "";
+		String str = "The dealer has: ";
 
 		for (Card c : dHand) {
 			str += c + ", ";
