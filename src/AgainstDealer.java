@@ -72,7 +72,7 @@ public class AgainstDealer {
 			input = "y";
 			while (input.equals("y") && hands.get(i)[0].getScore() <= 21) {
 				System.out.println("\nPlayer " + pNumber + ":");
-				System.out.println(hands.get(i));
+				System.out.println(hands.get(i)[0]);
 				System.out
 						.print("Do you want a hit? (y for yes, anything else for no): ");
 				input = sc.next();
@@ -81,7 +81,7 @@ public class AgainstDealer {
 				}
 			}
 			System.out.println("\nPlayer " + pNumber + ":");
-			System.out.println(hands.get(i) + "\n");
+			System.out.println(hands.get(i)[0] + "\n");
 		}
 		// Dealer Stuff
 		System.out.println(dHand);
