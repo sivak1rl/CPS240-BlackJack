@@ -62,6 +62,9 @@ public class AgainstDealer {
 					hands.get(i)[1] = new PlayerHand();
 					hands.get(i)[1].Deal(temp.pHand.get(1), deck.remove(0));
 
+					System.out.println(hands.get(i)[0]);
+					System.out.println(hands.get(i)[1]);
+					System.out.println();
 					for (PlayerHand ph : hands.get(i)) {
 						PlayerTurn(ph, deck);
 					}
@@ -72,7 +75,7 @@ public class AgainstDealer {
 			input = "y";
 			while (input.equals("y") && hands.get(i)[0].getScore() <= 21) {
 				System.out.println("\nPlayer " + pNumber + ":");
-				System.out.println(hands.get(i));
+				System.out.println(hands.get(i)[0]);
 				System.out
 						.print("Do you want a hit? (y for yes, anything else for no): ");
 				input = sc.next();
@@ -81,7 +84,7 @@ public class AgainstDealer {
 				}
 			}
 			System.out.println("\nPlayer " + pNumber + ":");
-			System.out.println(hands.get(i) + "\n");
+			System.out.println(hands.get(i)[0] + "\n");
 		}
 		// Dealer Stuff
 		System.out.println(dHand);
