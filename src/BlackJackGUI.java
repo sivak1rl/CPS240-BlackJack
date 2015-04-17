@@ -1,5 +1,6 @@
 import java.awt.EventQueue;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -65,30 +66,39 @@ public class BlackJackGUI {
 		leftpane.setLayout(new BoxLayout(leftpane,BoxLayout.PAGE_AXIS));
 		frame.getContentPane().add(leftpane,BorderLayout.WEST);
 		JPanel botpane= new JPanel();
-		botpane.setLayout(new CardLayout());
+		botpane.setLayout(new FlowLayout());
 		frame.getContentPane().add(botpane,BorderLayout.SOUTH);
 		
 		Label label_1 = new Label("Cards");
-		label_1.setAlignment(Label.CENTER);
-		botpane.add(label_1, "name_716488195047554");
+		Label label_2= new Label("Card2");
+		Label label_3= new Label("Card3");
+		//label_1.setAlignment(Label.CENTER);
+		botpane.add(label_1);
+		botpane.add(label_2);
+		botpane.add(label_3);
+		JButton button_1 = new JButton("+");
 		
-		Button button_1 = new Button("+");
-		button_1.setBackground(Color.PINK);
+		
+		button_1.setBackground(Color.CYAN);
 		leftpane.add(button_1);
 		
-		Button button = new Button("   Hit   ");
-		button.setBackground(Color.PINK);
+		JButton button = new JButton("   Hit   ");
+		button.setBackground(Color.ORANGE);
 		leftpane.add(button);
 		
-		Button button_2 = new Button("-");
-		button_2.setBackground(Color.PINK);
+		JButton button_2 = new JButton("   Stand   ");
+		button_2.setBackground(   Color.RED   );
 		leftpane.add(button_2);
-		
+		ActionListener btnListener = new BlackJackListener(button_1, button, button_2);
+		button_1.addActionListener(btnListener);
+		button_2.addActionListener(btnListener);
+		button.addActionListener(btnListener);
 		Label label = new Label("BlackJack");
 		label.setAlignment(Label.CENTER);
 		label.setFont(new Font("Aharoni", Font.BOLD, 27));
 		label.setForeground(Color.DARK_GRAY);
 		frame.getContentPane().add(label, BorderLayout.NORTH);
 	}
+	
 
 }

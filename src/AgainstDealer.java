@@ -20,11 +20,16 @@ public class AgainstDealer {
 		int numOfPlayers;
 		Scanner sc = new Scanner(System.in);
 		System.out.print("How many people are playing? (5 or less): ");
+		//GUI must ask about this
+		
+		
+		
 		numOfPlayers = sc.nextInt();
 		while (numOfPlayers > 5 || numOfPlayers < 1) {
 			System.out
 					.print("You must have a player and can't have more than 5.\nEnter another number: ");
 			numOfPlayers = sc.nextInt();
+			// GUI Must ask about this
 		}
 		for (int i = 0; i < numOfPlayers; i++) {
 			hands.add(new PlayerHand[1]);
@@ -78,6 +83,9 @@ public class AgainstDealer {
 				System.out.println(hands.get(i)[0]);
 				System.out
 						.print("Do you want a hit? (y for yes, anything else for no): ");
+				
+				//wait for GUI to hit
+				
 				input = sc.next();
 				if (input.equals("y")) {
 					hands.get(i)[0].Hit(deck);
@@ -115,6 +123,11 @@ public class AgainstDealer {
 			System.out.println(currentHand);
 			System.out
 					.print("Do you want a hit? (y for yes, anything else for no): ");
+			
+			
+			
+			
+			
 			input = sc.next();
 			if (input.equals("y")) {
 				currentHand.Hit(deck);

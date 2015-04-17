@@ -1,0 +1,62 @@
+
+
+	import java.awt.Image;
+	import java.awt.event.ActionEvent;
+	import java.awt.event.ActionListener;
+	import java.util.List;
+
+	import javax.swing.ImageIcon;
+	import javax.swing.JButton;
+	import javax.swing.JLabel;
+	import javax.swing.Timer;
+
+	public class BlackJackListener implements ActionListener {
+		private JButton jbPlusBet;
+		private JButton jbHitBut;
+		private JButton jbStand;
+		private JButton jbYes;
+		private JButton jbNo;
+		
+		
+
+		public BlackJackListener(JButton jbPlusBet, JButton jbHitBut, JButton jbStand) {
+
+			this.jbPlusBet= jbPlusBet;
+			this.jbHitBut=jbHitBut;
+			this.jbStand = jbStand;
+			
+			
+			
+			
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent eevee) {
+			if(eevee.getSource() instanceof JButton){
+				if(eevee.getSource() ==jbPlusBet){
+					
+					//Increase Bet and display on JLabel
+					
+				}
+				if(eevee.getSource()==jbStand){
+					
+					//Reject offer to hit
+				}
+				if(eevee.getSource()==jbHitBut){
+					
+					//Hit when asked
+				}
+				if(eevee.getSource()==jbYes){
+					
+					//maybe handled by hit
+				}
+				if(eevee.getSource()==jbNo){
+					
+					//maybe handled by no
+					
+				}
+			}
+			
+			
+		}
+}
