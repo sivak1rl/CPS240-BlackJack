@@ -28,6 +28,8 @@ import java.awt.Checkbox;
 public class BlackJackGUI {
 
 	private JFrame frame;
+	public boolean wantHit=false;
+	public JLabel jlbBet;
 
 	/**
 	 * Launch the application.
@@ -78,8 +80,9 @@ public class BlackJackGUI {
 		botpane.add(label_3);
 		JButton button_1 = new JButton("+");
 		
-		
+		 jlbBet= new JLabel("0");
 		button_1.setBackground(Color.CYAN);
+		leftpane.add(jlbBet);
 		leftpane.add(button_1);
 		
 		JButton button = new JButton("   Hit   ");
@@ -89,15 +92,21 @@ public class BlackJackGUI {
 		JButton button_2 = new JButton("   Stand   ");
 		button_2.setBackground(   Color.RED   );
 		leftpane.add(button_2);
-		ActionListener btnListener = new BlackJackListener(button_1, button, button_2);
+		ActionListener btnListener = new BlackJackListener(button_1, button, button_2,jlbBet,wantHit);
 		button_1.addActionListener(btnListener);
 		button_2.addActionListener(btnListener);
 		button.addActionListener(btnListener);
 		Label label = new Label("BlackJack");
+		Label labelOUT = new Label("message");
 		label.setAlignment(Label.CENTER);
 		label.setFont(new Font("Aharoni", Font.BOLD, 27));
-		label.setForeground(Color.DARK_GRAY);
+		labelOUT.setForeground(Color.DARK_GRAY);
+		labelOUT.setAlignment(Label.CENTER);
+		labelOUT.setFont(new Font("Aharoni", Font.BOLD, 15));
+		labelOUT.setForeground(Color.DARK_GRAY);
 		frame.getContentPane().add(label, BorderLayout.NORTH);
+		//frame.getContentPane().add(labelOUT, BorderLayout.NORTH);
+
 	}
 	
 
