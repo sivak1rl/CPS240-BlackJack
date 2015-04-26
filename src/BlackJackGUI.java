@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.swing.BoxLayout;
@@ -58,6 +59,7 @@ public class BlackJackGUI extends JFrame {
 		// North
 		JPanel pnlNorth = new JPanel(new FlowLayout());
 		JLabel lblDealer = new JLabel();
+		lblDealer.setText("Place your bet.");
 
 		lblDealer.setFont(new Font("Sans-Serif", Font.BOLD, 16));
 
@@ -71,6 +73,7 @@ public class BlackJackGUI extends JFrame {
 
 		pnlSouth.setBackground(Color.green);
 		pnlSouth.setAlignmentX(CENTER_ALIGNMENT);
+		pnlSouth.setLayout(new FlowLayout());
 
 		JLabel lblCards = new JLabel();
 		lblCards.setFont(new Font("Sans-Serif", Font.BOLD, 16));
@@ -124,6 +127,7 @@ public class BlackJackGUI extends JFrame {
 				bjg.hand.Bet();
 				lblTotalBet.setText("Bet: " + bjg.hand.getBet());
 				lblChipCount.setText("Chips: " + bjg.hand.getChipCount());
+				lblDealer.setText("Increase your bet or deal the cards.");
 				btnDeal.setEnabled(true);
 			}
 		});
@@ -132,8 +136,9 @@ public class BlackJackGUI extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent ae) {
 				btnBet.setEnabled(false);
-				bjg.hand.Hit(bjg.deck);
-				lblCards.setText(bjg.hand.toString());
+				Card card = bjg.hand.Hit(bjg.deck);
+				// lblCards.setText(bjg.hand.toString());
+				pnlSouth.add(new JLabel(card.getImg()));
 				if (bjg.hand.getScore() > 21) {
 					btnHit.setEnabled(false);
 					btnStand.setEnabled(false);
@@ -170,12 +175,14 @@ public class BlackJackGUI extends JFrame {
 				bjg.dealer = new DealerHand();
 				bjg.hand.pHand.clear();
 				bjg.hand.setScore(0);
-				lblDealer.setText("");
+				bjg.hand.setBet(0);
+				lblDealer.setText("Place your bet.");
 				lblCards.setText("");
 				bjg.deck = initDeck(new BlackJackGame());
 				btnDeal.setEnabled(false);
 				btnBet.setEnabled(true);
 				btnPlayAgain.setEnabled(false);
+				pnlSouth.removeAll();
 			}
 		});
 
@@ -194,7 +201,11 @@ public class BlackJackGUI extends JFrame {
 
 	public static List<Card> initDeck(BlackJackGame b) {
 		List<Card> deck = new ArrayList<Card>();
-		File[] files = new File("cards/").listFiles();
+//		File[] files = new File("cards/").listFiles();
+		List<File> files = new ArrayList<File>();
+		for(int i = 1; i < 53; i ++) {
+			files.add(new File("cards/" + i + ".png"));
+		}
 		for (double d : b.deck) {
 			deck.add(new Card(d, files));
 		}

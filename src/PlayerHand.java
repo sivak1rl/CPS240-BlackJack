@@ -109,11 +109,11 @@ public class PlayerHand {
 	}
 
 	// Laze will consume me.
-	public void Hit(List<Card> deck) {
-		Hit(deck.remove(0));
+	public Card Hit(List<Card> deck) {
+		return Hit(deck.remove(0));
 	}
 
-	public void Hit(Card c) {
+	public Card Hit(Card c) {
 		pHand.add(c);
 
 		score += c.getScore();
@@ -129,6 +129,7 @@ public class PlayerHand {
 				}
 			}
 		}
+		return c;
 	}
 
 	@Override

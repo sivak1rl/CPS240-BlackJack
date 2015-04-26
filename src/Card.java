@@ -50,6 +50,10 @@ public class Card {
 		}
 	}
 
+	public ImageIcon getImg() {
+		return this.img;
+	}
+	
 	public void aceChange() {
 		if (this.score == 11) {
 			this.score = 1;
