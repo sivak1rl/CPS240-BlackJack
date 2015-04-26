@@ -8,6 +8,10 @@ public class PlayerHand {
 	public int getScore() {
 		return score;
 	}
+	
+	public void setScore(int score) {
+		this.score = score;
+	}
 
 	private int chipCount;
 
@@ -19,6 +23,10 @@ public class PlayerHand {
 
 	public int getBet() {
 		return this.bet;
+	}
+	
+	public void setBet(int bet) {
+		this.bet = bet;
 	}
 
 	public void Bet() {

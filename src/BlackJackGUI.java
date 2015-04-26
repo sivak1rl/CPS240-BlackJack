@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.BoxLayout;
+import javax.swing.Icon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -29,10 +30,7 @@ public class BlackJackGUI extends JFrame {
 
 	public static void main(String[] args) {
 		BlackJackGUI bjg = new BlackJackGUI(new PlayerHand(), initDeck(new BlackJackGame()), new DealerHand());
-		bjg.hand.Deal(bjg.deck);
-		bjg.dealer.Deal(bjg.deck);
 		
-
 		// Create components and panels
 		JPanel pnlWest = new JPanel();
 
@@ -42,18 +40,20 @@ public class BlackJackGUI extends JFrame {
 		JButton btnBet = new JButton("Bet more");
 		JButton btnHit = new JButton("Hit");
 		JButton btnStand = new JButton("Stand");
+		JButton btnDeal = new JButton("Deal");
 
+		pnlWest.add(btnDeal);
 		pnlWest.add(lblTotalBet);
 		pnlWest.add(btnBet);
 		pnlWest.add(btnStand);
 		pnlWest.add(btnHit);
-
+		
 		pnlWest.setBackground(Color.green);
 		pnlWest.setLayout(new BoxLayout(pnlWest, BoxLayout.Y_AXIS));
 
 		// North
 		JPanel pnlNorth = new JPanel(new FlowLayout());
-		JLabel lblDealer = new JLabel(bjg.dealer.toString());
+		JLabel lblDealer = new JLabel();
 
 		lblDealer.setFont(new Font("Sans-Serif", Font.BOLD, 16));
 
@@ -68,7 +68,7 @@ public class BlackJackGUI extends JFrame {
 		pnlSouth.setBackground(Color.green);
 		pnlSouth.setAlignmentX(CENTER_ALIGNMENT);
 
-		JLabel lblCards = new JLabel(bjg.hand.toString());
+		JLabel lblCards = new JLabel();
 		lblCards.setFont(new Font("Sans-Serif", Font.BOLD, 16));
 
 		pnlSouth.add(lblCards, null);
@@ -100,12 +100,27 @@ public class BlackJackGUI extends JFrame {
 		panel.setBackground(Color.green);
 
 		// Action Listeners
+		btnDeal.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent ae) {
+				bjg.hand.Deal(bjg.deck);
+				bjg.dealer.Deal(bjg.deck);
+				btnDeal.setEnabled(false);
+				btnBet.setEnabled(false);
+				btnHit.setEnabled(true);
+				btnStand.setEnabled(true);
+				lblDealer.setText(bjg.dealer.toString());
+				lblCards.setText(bjg.hand.toString());
+			}
+		});
+		
 		btnBet.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent ae) {
 				bjg.hand.Bet();
 				lblTotalBet.setText("Bet: " + bjg.hand.getBet());
 				lblChipCount.setText("Chips: " + bjg.hand.getChipCount());
+				btnDeal.setEnabled(true);
 			}
 		});
 
@@ -135,6 +150,13 @@ public class BlackJackGUI extends JFrame {
 				}
 				lblDealer.setText(bjg.dealer.toString());
 				btnPlayAgain.setEnabled(true);
+				if(bjg.hand.beatDealer(bjg.dealer)) {
+					bjg.hand.WonBet();
+				} else {
+					bjg.hand.setBet(0);
+				}
+				lblChipCount.setText("Chips: " + bjg.hand.getChipCount());
+				lblTotalBet.setText("Bet: " + bjg.hand.getBet());
 			}
 		});
 
@@ -142,12 +164,13 @@ public class BlackJackGUI extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent ae) {
 				bjg.dealer = new DealerHand();
-				bjg.hand = new PlayerHand();
+				bjg.hand.pHand.clear();
+				bjg.hand.setScore(0);
 				lblDealer.setText("");
 				lblCards.setText("");
-				btnHit.setEnabled(true);
 				bjg.deck = initDeck(new BlackJackGame());
-				
+				btnDeal.setEnabled(false);
+				btnBet.setEnabled(true);
 			}
 		});
 
