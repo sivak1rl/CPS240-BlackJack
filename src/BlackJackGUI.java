@@ -206,6 +206,7 @@ public class BlackJackGUI extends JFrame {
 		for(int i = 1; i < 53; i ++) {
 			files.add(new File("cards/" + i + ".png"));
 		}
+		files.add(new File("cards/b1fh.png"));
 		for (double d : b.deck) {
 			deck.add(new Card(d, files));
 		}
