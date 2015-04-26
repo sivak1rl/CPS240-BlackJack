@@ -5,7 +5,7 @@ import java.util.Scanner;
 
 public class BlackJackGame {
 
-	double[] deck;
+	public double[] deck;
 
 	// will this import
 	// this one will be it

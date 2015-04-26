@@ -10,14 +10,13 @@ public class AgainstDealer {
 	public static void main(String[] args) {
 
 		BlackJackGame game = new BlackJackGame();
-
-		BlackJackGUI window = new BlackJackGUI();
-		window.frame.setVisible(true);
-		window.initialize();
+		PlayerHand[] hands = new PlayerHand[1];
+		hands[0] = new PlayerHand();
+		
+//		BlackJackGUI window = new BlackJackGUI(hands[0]);
 
 		boolean split = false;
 
-		PlayerHand[] hands = new PlayerHand[1];
 		DealerHand dHand = new DealerHand();
 		List<Card> deck = new LinkedList<Card>();
 		for (double d : game.deck) {
@@ -41,7 +40,7 @@ public class AgainstDealer {
 		// // GUI Must ask about this
 		// }
 		// for (int i = 0; i < numOfPlayers; i++) {
-		hands[0] = new PlayerHand();
+		// hands[0] = new PlayerHand();
 		hands[0].Deal(deck);
 		// }
 		dHand.Deal(deck);

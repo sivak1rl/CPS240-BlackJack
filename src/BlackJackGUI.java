@@ -15,7 +15,27 @@ import javax.swing.JPanel;
 
 public class BlackJackGUI extends JFrame {
 
+	List<Card> deck;
+	DealerHand dealer;
+	PlayerHand hand;
+
 	public BlackJackGUI(PlayerHand hand, List<Card> deck, DealerHand dealer) {
+
+		this.hand = hand;
+		this.deck = deck;
+		this.dealer = dealer;
+
+	}
+
+	public static void main(String[] args) {
+		PlayerHand hand = new PlayerHand();
+		List<Card> deck = initDeck(new BlackJackGame());
+
+		hand.Deal(deck);
+		DealerHand dealer = new DealerHand();
+		dealer.Deal(deck);
+		BlackJackGUI bjg = new BlackJackGUI(hand, deck, dealer);
+
 		// Create components and panels
 		JPanel pnlWest = new JPanel();
 
@@ -62,7 +82,11 @@ public class BlackJackGUI extends JFrame {
 		JLabel lblChipCount = new JLabel("Chips: " + hand.getChipCount());
 		lblChipCount.setFont(new Font("Sans-Serif", Font.BOLD, 20));
 
+		JButton btnPlayAgain = new JButton("Play Again");
+		btnPlayAgain.setEnabled(false);
+
 		pnlEast.add(lblChipCount);
+		pnlEast.add(btnPlayAgain, null);
 
 		pnlEast.setLayout(new BoxLayout(pnlEast, BoxLayout.Y_AXIS));
 		pnlEast.setBackground(Color.green);
@@ -92,8 +116,13 @@ public class BlackJackGUI extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent ae) {
 				btnBet.setEnabled(false);
-				hand.Hit(deck);
+				hand.Hit(bjg.deck);
 				lblCards.setText(hand.toString());
+				if (hand.getScore() > 21) {
+					btnHit.setEnabled(false);
+					btnStand.setEnabled(false);
+					btnPlayAgain.setEnabled(true);
+				}
 			}
 		});
 
@@ -102,37 +131,44 @@ public class BlackJackGUI extends JFrame {
 			public void actionPerformed(ActionEvent ae) {
 				dealer.setGameDone(true);
 				btnHit.setEnabled(false);
+				btnStand.setEnabled(false);
+				btnBet.setEnabled(false);
 				while (dealer.getScore() < 17) {
-					dealer.Hit(deck);
+					dealer.Hit(bjg.deck);
 				}
 				lblDealer.setText(dealer.toString());
+				btnPlayAgain.setEnabled(true);
+			}
+		});
+
+		btnPlayAgain.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent ae) {
+				dealer.setGameDone(false);
+				btnHit.setEnabled(true);
+				bjg.deck = initDeck(new BlackJackGame());
 			}
 		});
 
 		// Add panel to frame
-		add(panel);
+		bjg.add(panel);
+
 
 		// Set important frame settings
-		setTitle("CPS 240 - BlackJack");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setSize(966, 723);
-		setBackground(Color.green);
-		setLocation(200, 0);
-		setResizable(false);
-		setVisible(true);
+		bjg.setTitle("CPS 240 - BlackJack");
+		bjg.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		bjg.setSize(966, 723);
+		bjg.setBackground(Color.green);
+		bjg.setLocation(200, 0);
+		bjg.setResizable(false);
+		bjg.setVisible(true);
 	}
 
-	public static void main(String[] args) {
-		PlayerHand hand = new PlayerHand();
-		BlackJackGame b = new BlackJackGame();
+	public static List<Card> initDeck(BlackJackGame b) {
 		List<Card> deck = new ArrayList<Card>();
 		for (double d : b.deck) {
 			deck.add(new Card(d));
 		}
-
-		hand.Deal(deck);
-		DealerHand dealer = new DealerHand();
-		dealer.Deal(deck);
-		BlackJackGUI bjg = new BlackJackGUI(hand, deck, dealer);
+		return deck;
 	}
 }
