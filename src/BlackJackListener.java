@@ -14,7 +14,7 @@
 		private JButton jbStand;
 		private JLabel jlbBetText;
 		private int BET=0;
-		private boolean wantsHit;
+		public boolean wantsHit;
 
 		public BlackJackListener(JButton jbPlusBet, JButton jbHitBut, JButton jbStand, JLabel jlbBetText,Boolean wantsHit) {
 
@@ -31,10 +31,10 @@
 		public void actionPerformed(ActionEvent eevee) {
 			if(eevee.getSource() instanceof JButton){
 				if(eevee.getSource() ==jbPlusBet){
-					System.out.println("hit plus");
+					
 					//Increase Bet and display on JLabel
 					BET=BET+10;
-					jlbBetText.setText(BET+"");
+					jlbBetText.setText("BET: " +BET+"");
 				}
 				if(eevee.getSource()==jbStand){
 					
@@ -44,6 +44,7 @@
 				if(eevee.getSource()==jbHitBut){
 					
 					//Hit when asked
+					
 					wantsHit=true;
 				}
 				

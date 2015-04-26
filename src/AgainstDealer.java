@@ -1,3 +1,4 @@
+import java.awt.EventQueue;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -9,6 +10,12 @@ public class AgainstDealer {
 	public static void main(String[] args) {
 
 		BlackJackGame game = new BlackJackGame();
+	
+					BlackJackGUI window = new BlackJackGUI();
+					window.frame.setVisible(true);
+					window.initialize();
+			
+		
 		List<PlayerHand[]> hands = new LinkedList<PlayerHand[]>();
 		DealerHand dHand = new DealerHand();
 		List<Card> deck = new LinkedList<Card>();
@@ -22,9 +29,10 @@ public class AgainstDealer {
 		System.out.print("How many people are playing? (5 or less): ");
 		//GUI must ask about this
 		
+		System.out.println(window.wantHit);
 		
-		
-		numOfPlayers = sc.nextInt();
+		//numOfPlayers = sc.nextInt();
+		numOfPlayers = 1;
 		while (numOfPlayers > 5 || numOfPlayers < 1) {
 			System.out
 					.print("You must have a player and can't have more than 5.\nEnter another number: ");
@@ -41,6 +49,7 @@ public class AgainstDealer {
 			int pNumber = i + 1;
 			System.out.println("Player " + pNumber + ":");
 			System.out.println(hands.get(i)[0]);
+			
 		}
 		System.out.println("\nThe dealer's up card is " + dHand.getUpCard()
 				+ "\n");
@@ -50,9 +59,18 @@ public class AgainstDealer {
 			System.out.println(hands.get(i)[0]);
 			if (hands.get(i)[0].getHasDoubles()) {
 				System.out
-						.print("You can split. Want to? (y for yes, anything else for no): ");
+						.print("You can split. Want to? (y for yes, anything else for no) or Hit for yes: ");
+				
+				
+				System.out.println(window.wantHit+"");
+				
+				// Want to get wantHit true using GUI
 				input = sc.next();
-				if (input.equals("y")) {
+				
+				if (input.equals("y")||window.wantHit) {
+					
+					//wont work with gui
+					window.wantHit=false;
 					PlayerHand temp = hands.get(i)[0];
 					hands.set(i, new PlayerHand[2]);
 					for (int j = 0; j < 2; j++) {
@@ -70,6 +88,7 @@ public class AgainstDealer {
 					System.out.println(hands.get(i)[0]);
 					System.out.println(hands.get(i)[1]);
 					System.out.println();
+					
 					for (PlayerHand ph : hands.get(i)) {
 						PlayerTurn(ph, deck);
 					}
@@ -78,7 +97,7 @@ public class AgainstDealer {
 				}
 			}
 			input = "y";
-			while (input.equals("y") && hands.get(i)[0].getScore() <= 21) {
+			while ((input.equals("y")||window.wantHit) && hands.get(i)[0].getScore() <= 21) {
 				System.out.println("\nPlayer " + pNumber + ":");
 				System.out.println(hands.get(i)[0]);
 				System.out
@@ -87,7 +106,9 @@ public class AgainstDealer {
 				//wait for GUI to hit
 				
 				input = sc.next();
-				if (input.equals("y")) {
+				
+				if (input.equals("y")||window.wantHit) {
+					window.wantHit=false;
 					hands.get(i)[0].Hit(deck);
 				}
 			}
