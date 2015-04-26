@@ -28,19 +28,16 @@ public class BlackJackGUI extends JFrame {
 	}
 
 	public static void main(String[] args) {
-		PlayerHand hand = new PlayerHand();
-		List<Card> deck = initDeck(new BlackJackGame());
-
-		hand.Deal(deck);
-		DealerHand dealer = new DealerHand();
-		dealer.Deal(deck);
-		BlackJackGUI bjg = new BlackJackGUI(hand, deck, dealer);
+		BlackJackGUI bjg = new BlackJackGUI(new PlayerHand(), initDeck(new BlackJackGame()), new DealerHand());
+		bjg.hand.Deal(bjg.deck);
+		bjg.dealer.Deal(bjg.deck);
+		
 
 		// Create components and panels
 		JPanel pnlWest = new JPanel();
 
 		// WEST side stories
-		JLabel lblTotalBet = new JLabel("Bet: " + hand.getBet());
+		JLabel lblTotalBet = new JLabel("Bet: " + bjg.hand.getBet());
 		lblTotalBet.setFont(new Font("Sans-Serif", Font.BOLD, 20));
 		JButton btnBet = new JButton("Bet more");
 		JButton btnHit = new JButton("Hit");
@@ -56,7 +53,7 @@ public class BlackJackGUI extends JFrame {
 
 		// North
 		JPanel pnlNorth = new JPanel(new FlowLayout());
-		JLabel lblDealer = new JLabel(dealer.toString());
+		JLabel lblDealer = new JLabel(bjg.dealer.toString());
 
 		lblDealer.setFont(new Font("Sans-Serif", Font.BOLD, 16));
 
@@ -71,7 +68,7 @@ public class BlackJackGUI extends JFrame {
 		pnlSouth.setBackground(Color.green);
 		pnlSouth.setAlignmentX(CENTER_ALIGNMENT);
 
-		JLabel lblCards = new JLabel(hand.toString());
+		JLabel lblCards = new JLabel(bjg.hand.toString());
 		lblCards.setFont(new Font("Sans-Serif", Font.BOLD, 16));
 
 		pnlSouth.add(lblCards, null);
@@ -79,7 +76,7 @@ public class BlackJackGUI extends JFrame {
 		// East
 		JPanel pnlEast = new JPanel();
 
-		JLabel lblChipCount = new JLabel("Chips: " + hand.getChipCount());
+		JLabel lblChipCount = new JLabel("Chips: " + bjg.hand.getChipCount());
 		lblChipCount.setFont(new Font("Sans-Serif", Font.BOLD, 20));
 
 		JButton btnPlayAgain = new JButton("Play Again");
@@ -106,9 +103,9 @@ public class BlackJackGUI extends JFrame {
 		btnBet.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent ae) {
-				hand.Bet();
-				lblTotalBet.setText("Bet: " + hand.getBet());
-				lblChipCount.setText("Chips: " + hand.getChipCount());
+				bjg.hand.Bet();
+				lblTotalBet.setText("Bet: " + bjg.hand.getBet());
+				lblChipCount.setText("Chips: " + bjg.hand.getChipCount());
 			}
 		});
 
@@ -116,9 +113,9 @@ public class BlackJackGUI extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent ae) {
 				btnBet.setEnabled(false);
-				hand.Hit(bjg.deck);
-				lblCards.setText(hand.toString());
-				if (hand.getScore() > 21) {
+				bjg.hand.Hit(bjg.deck);
+				lblCards.setText(bjg.hand.toString());
+				if (bjg.hand.getScore() > 21) {
 					btnHit.setEnabled(false);
 					btnStand.setEnabled(false);
 					btnPlayAgain.setEnabled(true);
@@ -129,14 +126,14 @@ public class BlackJackGUI extends JFrame {
 		btnStand.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent ae) {
-				dealer.setGameDone(true);
+				bjg.dealer.setGameDone(true);
 				btnHit.setEnabled(false);
 				btnStand.setEnabled(false);
 				btnBet.setEnabled(false);
-				while (dealer.getScore() < 17) {
-					dealer.Hit(bjg.deck);
+				while (bjg.dealer.getScore() < 17) {
+					bjg.dealer.Hit(bjg.deck);
 				}
-				lblDealer.setText(dealer.toString());
+				lblDealer.setText(bjg.dealer.toString());
 				btnPlayAgain.setEnabled(true);
 			}
 		});
@@ -144,9 +141,13 @@ public class BlackJackGUI extends JFrame {
 		btnPlayAgain.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent ae) {
-				dealer.setGameDone(false);
+				bjg.dealer = new DealerHand();
+				bjg.hand = new PlayerHand();
+				lblDealer.setText("");
+				lblCards.setText("");
 				btnHit.setEnabled(true);
 				bjg.deck = initDeck(new BlackJackGame());
+				
 			}
 		});
 
