@@ -4,11 +4,11 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.BoxLayout;
-import javax.swing.Icon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -29,8 +29,9 @@ public class BlackJackGUI extends JFrame {
 	}
 
 	public static void main(String[] args) {
-		BlackJackGUI bjg = new BlackJackGUI(new PlayerHand(), initDeck(new BlackJackGame()), new DealerHand());
-		
+		BlackJackGUI bjg = new BlackJackGUI(new PlayerHand(),
+				initDeck(new BlackJackGame()), new DealerHand());
+
 		// Create components and panels
 		JPanel pnlWest = new JPanel();
 
@@ -50,7 +51,7 @@ public class BlackJackGUI extends JFrame {
 		pnlWest.add(btnBet);
 		pnlWest.add(btnStand);
 		pnlWest.add(btnHit);
-		
+
 		pnlWest.setBackground(Color.green);
 		pnlWest.setLayout(new BoxLayout(pnlWest, BoxLayout.Y_AXIS));
 
@@ -116,7 +117,7 @@ public class BlackJackGUI extends JFrame {
 				lblCards.setText(bjg.hand.toString());
 			}
 		});
-		
+
 		btnBet.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent ae) {
@@ -153,7 +154,7 @@ public class BlackJackGUI extends JFrame {
 				}
 				lblDealer.setText(bjg.dealer.toString());
 				btnPlayAgain.setEnabled(true);
-				if(bjg.hand.beatDealer(bjg.dealer)) {
+				if (bjg.hand.beatDealer(bjg.dealer)) {
 					bjg.hand.WonBet();
 				} else {
 					bjg.hand.setBet(0);
@@ -180,7 +181,6 @@ public class BlackJackGUI extends JFrame {
 		// Add panel to frame
 		bjg.add(panel);
 
-
 		// Set important frame settings
 		bjg.setTitle("CPS 240 - BlackJack");
 		bjg.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -193,8 +193,9 @@ public class BlackJackGUI extends JFrame {
 
 	public static List<Card> initDeck(BlackJackGame b) {
 		List<Card> deck = new ArrayList<Card>();
+		File[] files = new File("cards/").listFiles();
 		for (double d : b.deck) {
-			deck.add(new Card(d));
+			deck.add(new Card(d, files));
 		}
 		return deck;
 	}
