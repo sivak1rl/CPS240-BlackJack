@@ -141,9 +141,13 @@ public class BlackJackGUI extends JFrame {
 		btnPlayAgain.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent ae) {
-				bjg.dealer.setGameDone(false);
+				bjg.dealer = new DealerHand();
+				bjg.hand = new PlayerHand();
+				lblDealer.setText("");
+				lblCards.setText("");
 				btnHit.setEnabled(true);
 				bjg.deck = initDeck(new BlackJackGame());
+				
 			}
 		});
 
