@@ -175,6 +175,7 @@ public class BlackJackGUI extends JFrame {
 				bjg.deck = initDeck(new BlackJackGame());
 				btnDeal.setEnabled(false);
 				btnBet.setEnabled(true);
+				btnPlayAgain.setEnabled(false);
 			}
 		});
 
