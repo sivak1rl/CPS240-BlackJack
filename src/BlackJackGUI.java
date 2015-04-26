@@ -41,6 +41,9 @@ public class BlackJackGUI extends JFrame {
 		JButton btnHit = new JButton("Hit");
 		JButton btnStand = new JButton("Stand");
 		JButton btnDeal = new JButton("Deal");
+		btnDeal.setEnabled(false);
+		btnHit.setEnabled(false);
+		btnStand.setEnabled(false);
 
 		pnlWest.add(btnDeal);
 		pnlWest.add(lblTotalBet);
