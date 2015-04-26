@@ -1,5 +1,5 @@
 import java.io.File;
-import java.io.IOException;
+import java.util.List;
 
 import javax.swing.ImageIcon;
 
@@ -19,7 +19,7 @@ public class Card {
 	private ImageIcon img;
 	protected boolean ace;
 
-	public Card(double d, File[] f) {
+	public Card(double d, List<File> f) {
 		value = (int) (d);
 		if (d % (int) (d) < 0.25) {
 			suit = "spade";
@@ -44,7 +44,7 @@ public class Card {
 			ace = false;
 		}
 		try {
-			img = new ImageIcon(f[value - 1].getAbsolutePath());
+			img = new ImageIcon(f.get(value - 1).getAbsolutePath());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
