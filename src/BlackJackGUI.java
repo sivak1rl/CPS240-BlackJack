@@ -84,8 +84,11 @@ public class BlackJackGUI extends JFrame {
 		lblChipCount.setFont(new Font("Sans-Serif", Font.BOLD, 20));
 
 		JButton btnPlayAgain = new JButton("Play Again");
+		JLabel lblWinLose = new JLabel();
+		lblWinLose.setFont(new Font("Sans-Serif", Font.BOLD, 16));
 		btnPlayAgain.setEnabled(false);
 
+		pnlEast.add(lblWinLose);
 		pnlEast.add(lblChipCount);
 		pnlEast.add(btnPlayAgain, null);
 
@@ -117,7 +120,7 @@ public class BlackJackGUI extends JFrame {
 				Card c = bjg.dealer.getUpCard();
 				pnlNorth.add(new JLabel(c.getImg()));
 				pnlNorth.add(new JLabel(new ImageIcon("cards/b1fv.png")));
-				for(Card d : bjg.hand.pHand) {
+				for (Card d : bjg.hand.pHand) {
 					pnlSouth.add(new JLabel(d.getImg()));
 				}
 				panel.revalidate();
@@ -132,7 +135,9 @@ public class BlackJackGUI extends JFrame {
 				lblTotalBet.setText("Bet: " + bjg.hand.getBet());
 				lblChipCount.setText("Chips: " + bjg.hand.getChipCount());
 				lblDealer.setText("Increase your bet or deal the cards.");
-				btnDeal.setEnabled(true);
+				if (bjg.hand.getBet() > 0) {
+					btnDeal.setEnabled(true);
+				}
 			}
 		});
 
@@ -147,7 +152,7 @@ public class BlackJackGUI extends JFrame {
 					btnPlayAgain.setEnabled(true);
 				}
 				pnlSouth.removeAll();
-				for(Card c : bjg.hand.pHand) {
+				for (Card c : bjg.hand.pHand) {
 					pnlSouth.add(new JLabel(c.getImg()));
 				}
 				pnlSouth.revalidate();
@@ -166,18 +171,20 @@ public class BlackJackGUI extends JFrame {
 					bjg.dealer.Hit(bjg.deck);
 				}
 				pnlNorth.removeAll();
-				
-				for(Card c : bjg.dealer.dHand) {
+
+				for (Card c : bjg.dealer.dHand) {
 					pnlNorth.add(new JLabel(c.getImg()));
 				}
 				pnlNorth.revalidate();
 				pnlNorth.repaint();
-//				lblDealer.setText(bjg.dealer.toString());
+				// lblDealer.setText(bjg.dealer.toString());
 				btnPlayAgain.setEnabled(true);
 				if (bjg.hand.beatDealer(bjg.dealer)) {
 					bjg.hand.WonBet();
+					lblWinLose.setText("You beat the dealer!");
 				} else {
 					bjg.hand.setBet(0);
+					lblWinLose.setText("You lost to the dealer!");
 				}
 				lblChipCount.setText("Chips: " + bjg.hand.getChipCount());
 				lblTotalBet.setText("Bet: " + bjg.hand.getBet());
@@ -191,28 +198,31 @@ public class BlackJackGUI extends JFrame {
 				bjg.hand.pHand.clear();
 				bjg.hand.setScore(0);
 				bjg.hand.setBet(0);
+				lblTotalBet.setText("Bet: " + bjg.hand.getBet());
 				pnlNorth.removeAll();
 				pnlNorth.revalidate();
 				pnlNorth.repaint();
 				pnlNorth.add(lblDealer);
 				lblDealer.setText("Place your bet.");
+				lblWinLose.setText("");
 				bjg.deck = initDeck(new BlackJackGame());
+				Collections.shuffle(bjg.deck);
 				btnDeal.setEnabled(false);
 				btnBet.setEnabled(true);
 				btnPlayAgain.setEnabled(false);
 				pnlSouth.removeAll();
 			}
 		});
-		
+
 		JPanel pnlCenter = new JPanel();
 		pnlCenter.setLayout(new FlowLayout());
 		pnlCenter.setAlignmentY(FlowLayout.CENTER);
 		pnlCenter.setAlignmentX(FlowLayout.CENTER);
 		pnlCenter.setBackground(Color.green);
 		pnlCenter.add(new JLabel(new ImageIcon("cards/b1fv.png")));
-		
+
 		panel.add(pnlCenter, null);
-		
+
 		// Add panel to frame
 		bjg.add(panel);
 
@@ -228,9 +238,9 @@ public class BlackJackGUI extends JFrame {
 
 	public static List<Card> initDeck(BlackJackGame b) {
 		List<Card> deck = new ArrayList<Card>();
-//		File[] files = new File("cards/").listFiles();
+		// File[] files = new File("cards/").listFiles();
 		List<File> files = new ArrayList<File>();
-		for(int i = 1; i < 53; i ++) {
+		for (int i = 1; i < 53; i++) {
 			files.add(new File("cards/" + i + ".png"));
 		}
 		files.add(new File("cards/b1fv.png"));
