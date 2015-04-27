@@ -39,6 +39,9 @@ public class Card {
 		} else if (value % 13 == 1) {
 			ace = true;
 			score = 11;
+		} else if(value % 13 == 0) {
+			ace = false;
+			score = 10;
 		} else {
 			score = value % 13;
 			ace = false;

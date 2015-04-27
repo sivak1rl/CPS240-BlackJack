@@ -146,7 +146,11 @@ public class BlackJackGUI extends JFrame {
 			public void actionPerformed(ActionEvent ae) {
 				btnBet.setEnabled(false);
 				bjg.hand.Hit(bjg.deck);
+				System.out.println(bjg.hand.getScore());
 				if (bjg.hand.getScore() > 21) {
+					bjg.hand.setBet(0);
+					lblTotalBet.setText("Bet: " + bjg.hand.getBet());
+					lblWinLose.setText("You bust!");
 					btnHit.setEnabled(false);
 					btnStand.setEnabled(false);
 					btnPlayAgain.setEnabled(true);
