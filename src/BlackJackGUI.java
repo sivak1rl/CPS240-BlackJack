@@ -147,7 +147,7 @@ public class BlackJackGUI extends JFrame {
 				for(Card c : bjg.hand.pHand) {
 					pnlSouth.add(new JLabel(c.getImg()));
 				}
-				pnlSouth.validate();
+				pnlSouth.revalidate();
 				pnlSouth.repaint();
 			}
 		});
