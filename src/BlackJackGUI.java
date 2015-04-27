@@ -136,14 +136,19 @@ public class BlackJackGUI extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent ae) {
 				btnBet.setEnabled(false);
-				Card card = bjg.hand.Hit(bjg.deck);
 				// lblCards.setText(bjg.hand.toString());
-				pnlSouth.add(new JLabel(card.getImg()));
+				bjg.hand.Hit(bjg.deck);
 				if (bjg.hand.getScore() > 21) {
 					btnHit.setEnabled(false);
 					btnStand.setEnabled(false);
 					btnPlayAgain.setEnabled(true);
 				}
+				pnlSouth.removeAll();
+				for(Card c : bjg.hand.pHand) {
+					pnlSouth.add(new JLabel(c.getImg()));
+				}
+				pnlSouth.validate();
+				pnlSouth.repaint();
 			}
 		});
 
