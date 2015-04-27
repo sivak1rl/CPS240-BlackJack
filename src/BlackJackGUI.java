@@ -6,9 +6,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.swing.BoxLayout;
+import javax.swing.GroupLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -26,7 +28,7 @@ public class BlackJackGUI extends JFrame {
 		this.hand = hand;
 		this.deck = deck;
 		this.dealer = dealer;
-
+		Collections.shuffle(this.deck);
 	}
 
 	public static void main(String[] args) {
@@ -201,7 +203,16 @@ public class BlackJackGUI extends JFrame {
 				pnlSouth.removeAll();
 			}
 		});
-
+		
+		JPanel pnlCenter = new JPanel();
+		pnlCenter.setLayout(new FlowLayout());
+		pnlCenter.setAlignmentY(FlowLayout.CENTER);
+		pnlCenter.setAlignmentX(FlowLayout.CENTER);
+		pnlCenter.setBackground(Color.green);
+		pnlCenter.add(new JLabel(new ImageIcon("cards/b1fv.png")));
+		
+		panel.add(pnlCenter, null);
+		
 		// Add panel to frame
 		bjg.add(panel);
 
