@@ -6,10 +6,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -75,11 +75,6 @@ public class BlackJackGUI extends JFrame {
 		pnlSouth.setAlignmentX(CENTER_ALIGNMENT);
 		pnlSouth.setLayout(new FlowLayout());
 
-		JLabel lblCards = new JLabel();
-		lblCards.setFont(new Font("Sans-Serif", Font.BOLD, 16));
-
-		pnlSouth.add(lblCards, null);
-
 		// East
 		JPanel pnlEast = new JPanel();
 
@@ -116,8 +111,15 @@ public class BlackJackGUI extends JFrame {
 				btnBet.setEnabled(false);
 				btnHit.setEnabled(true);
 				btnStand.setEnabled(true);
-				lblDealer.setText(bjg.dealer.toString());
-				lblCards.setText(bjg.hand.toString());
+				lblDealer.setText("");
+				Card c = bjg.dealer.getUpCard();
+				pnlNorth.add(new JLabel(c.getImg()));
+				pnlNorth.add(new JLabel(new ImageIcon("cards/b1fv.png")));
+				for(Card d : bjg.hand.pHand) {
+					pnlSouth.add(new JLabel(d.getImg()));
+				}
+				panel.revalidate();
+				panel.repaint();
 			}
 		});
 
@@ -136,7 +138,6 @@ public class BlackJackGUI extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent ae) {
 				btnBet.setEnabled(false);
-				// lblCards.setText(bjg.hand.toString());
 				bjg.hand.Hit(bjg.deck);
 				if (bjg.hand.getScore() > 21) {
 					btnHit.setEnabled(false);
@@ -162,7 +163,14 @@ public class BlackJackGUI extends JFrame {
 				while (bjg.dealer.getScore() < 17) {
 					bjg.dealer.Hit(bjg.deck);
 				}
-				lblDealer.setText(bjg.dealer.toString());
+				pnlNorth.removeAll();
+				
+				for(Card c : bjg.dealer.dHand) {
+					pnlNorth.add(new JLabel(c.getImg()));
+				}
+				pnlNorth.revalidate();
+				pnlNorth.repaint();
+//				lblDealer.setText(bjg.dealer.toString());
 				btnPlayAgain.setEnabled(true);
 				if (bjg.hand.beatDealer(bjg.dealer)) {
 					bjg.hand.WonBet();
@@ -181,8 +189,11 @@ public class BlackJackGUI extends JFrame {
 				bjg.hand.pHand.clear();
 				bjg.hand.setScore(0);
 				bjg.hand.setBet(0);
+				pnlNorth.removeAll();
+				pnlNorth.revalidate();
+				pnlNorth.repaint();
+				pnlNorth.add(lblDealer);
 				lblDealer.setText("Place your bet.");
-				lblCards.setText("");
 				bjg.deck = initDeck(new BlackJackGame());
 				btnDeal.setEnabled(false);
 				btnBet.setEnabled(true);
@@ -211,7 +222,7 @@ public class BlackJackGUI extends JFrame {
 		for(int i = 1; i < 53; i ++) {
 			files.add(new File("cards/" + i + ".png"));
 		}
-		files.add(new File("cards/b1fh.png"));
+		files.add(new File("cards/b1fv.png"));
 		for (double d : b.deck) {
 			deck.add(new Card(d, files));
 		}

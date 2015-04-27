@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DealerHand {
-	private List<Card> dHand;
+	public List<Card> dHand;
 	private int score;
 	private boolean gameDone;
 
